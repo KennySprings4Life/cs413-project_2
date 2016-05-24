@@ -11,6 +11,27 @@ var credits = new PIXI.Container();
 var manual = new PIXI.Container();
 var gameOver = new PIXI.Container();
 
+
+var playIconTexture;
+var instructionsIconTexture;
+var creditsIconTexture;
+var myFaceTexture;
+var homeTexture;
+var gameOverSpriteTexture;
+var winSpriteTexture;
+var backWallTexture;
+var floorTexture;
+var optionsBarTexture;
+var swordTexture;
+var swordTextureSelected;
+var wandTexture;
+var wandTextureSelected;
+var waterTexture;
+var waterTextureSelected;
+var fireTexture;
+var fireTextureSelected;
+var heroTexture;
+
 PIXI.loader
 	.add("sounds/fullSound.mp3")
 	.load(ready);
@@ -35,8 +56,28 @@ PIXI.loader
 	.add("assets.json")
 	.load(readyAssets);
 
-var frames = [];
 function readyAssets(){
+	playIconTexture = new PIXI.Texture.fromImage("play.png");
+	instructionsIconTexture = new PIXI.Texture.fromImage("manual.png");
+	creditsIconTexture = new PIXI.Texture.fromImage("credits.png");
+	myFaceTexture = new PIXI.Texture.fromFrame("myFace.png");
+	homeTexture = new PIXI.Texture.fromFrame("plainHome.png");
+	gameOverSpriteTexture = new PIXI.Texture.fromFrame("gameOver.png");
+	winSpriteTexture = new PIXI.Texture.fromFrame("winner.png");
+	backWallTexture = new PIXI.Texture.fromFrame("backWall.png");
+	floorTexture = new PIXI.Texture.fromFrame("floor2.png");
+	optionsBarTexture = new PIXI.Texture.fromFrame("optionsBar.png");
+	swordTexture = new PIXI.Texture.fromFrame("swordIcon.png");
+	swordTextureSelected = new PIXI.Texture.fromFrame("swordIconSelected.png");
+	wandTexture = new PIXI.Texture.fromFrame("wandIcon.png");
+	wandTextureSelected = new PIXI.Texture.fromFrame("wandIconSelected.png");
+	waterTexture = new PIXI.Texture.fromFrame("waterSprite.png");
+	waterTextureSelected = new PIXI.Texture.fromFrame("waterSpriteSelected.png");
+	fireTexture = new PIXI.Texture.fromFrame("fireSprite.png");
+	fireTextureSelected = new PIXI.Texture.fromFrame("fireSpriteSelected.png");
+	heroTexture = new PIXI.Texture.fromFrame("hero.png");
+	
+	frames = [];
 	for(var i=1; i<=10; i++){
 		if(i<10){
 			frames.push(PIXI.Texture.fromFrame("movingHero"+i+".png"));
@@ -64,9 +105,8 @@ function ready(){
 function setMainMenu(){
 	stage.removeChildren();
 
-
+	window.alert("Where is it?");
 	//Play Game
-	var playIconTexture = new PIXI.Texture.fromImage("play.png");
 	var playIcon = new PIXI.Sprite(playIconTexture);
 	playIcon.anchor.x = 0.5;
 	playIcon.anchor.y = 0;
@@ -76,7 +116,6 @@ function setMainMenu(){
 	mainMenu.addChild(playIcon);
 
 	//Instructions
-	var instructionsIconTexture = new PIXI.Texture.fromImage("manual.png");
 	var instructionsIcon = new PIXI.Sprite(instructionsIconTexture);
 	instructionsIcon.anchor.x = 0.5;
 	instructionsIcon.anchor.y = 0;
@@ -86,7 +125,6 @@ function setMainMenu(){
 	mainMenu.addChild(instructionsIcon);
 
 	//Credits
-	var creditsIconTexture = new PIXI.Texture.fromImage("credits.png");
 	var creditsIcon = new PIXI.Sprite(creditsIconTexture);
 	creditsIcon.anchor.x = 0.5;
 	creditsIcon.anchor.y = 0;
@@ -119,15 +157,15 @@ function setMainMenu(){
 		setInstructions();
 	}
 	instructionsIcon.on('mousedown', mouseHandlerInstructions);
-	
-	
 }
+window.alert("Is it here?");
+setMainMenu();
 
 function setCredits(){
 	stage.removeChildren();
 	stage.addChild(credits);
 	
-	var myFace = new PIXI.Sprite.fromImage("myFace.png");
+	var myFace = new PIXI.Sprite(myFaceTexture);
 	myFace.anchor.x = 0.5;
 	myFace.anchor.y = 0.5;
 	myFace.position.x = 300;
@@ -136,7 +174,7 @@ function setCredits(){
 	//Add My Face to the Credits screen
 	credits.addChild(myFace);
 	
-	var goHome = new PIXI.Sprite.fromImage("plainHome.png");
+	var goHome = new PIXI.Sprite(homeTexture);
 	goHome.anchor.x = 0;
 	goHome.anchor.y = 0;
 	goHome.position.x = 15;
@@ -148,7 +186,7 @@ function setCredits(){
 	credits.addChild(goHome);
 	
 	function mouseHandlerCreditsHome(e){
-		selectSound.play()
+		selectSound.play();
 		setMainMenu();
 	}
 	goHome.on('mousedown', mouseHandlerCreditsHome);
@@ -172,7 +210,7 @@ function setInstructions(){
 	textContainer.addChild(line1);
 	manual.addChild(textContainer);
 	
-	var goHome = new PIXI.Sprite.fromImage("plainHome.png");
+	var goHome = new PIXI.Sprite(homeTexture);
 	goHome.anchor.x = 0;
 	goHome.anchor.y = 0;
 	goHome.position.x = 15;
@@ -199,19 +237,19 @@ function setGameOver(hasLost){
 	stage.removeChildren();
 	stage.addChild(gameOver);
 	
-	var gameOverSprite = new PIXI.Sprite.fromImage("gameOver.png");
+	var gameOverSprite = new PIXI.Sprite(gameOverSpriteTexture);
 	gameOverSprite.anchor.x = 0.5;
 	gameOverSprite.anchor.y = 0.5;
 	gameOverSprite.position.x = 300;
 	gameOverSprite.position.y = 200;
 	
-	var winSprite = new PIXI.Sprite.fromImage("winner.png");
+	var winSprite = new PIXI.Sprite(winSpriteTexture);
 	winSprite.anchor.x = 0.5;
 	winSprite.anchor.y = 0.5;
 	winSprite.position.x = 300;
 	winSprite.position.y = 200;
 	
-	var menuText = new PIXI.Sprite.fromImage("home.png");
+	var menuText = new PIXI.Sprite(homeTexture);
 	menuText.anchor.x = 0;
 	menuText.anchor.y = 0;
 	menuText.position.x = 15;
@@ -239,7 +277,7 @@ function setField(){
 	
 	//Aesthetic Background
 	//Brick Wall
-	var backWallSprite = new PIXI.Sprite.fromImage("backWall.png");
+	var backWallSprite = new PIXI.Sprite(backWallTexture);
 	backWallSprite.anchor.x = 0;
 	backWallSprite.anchor.y = 0;
 	backWallSprite.position.x = 0;
@@ -247,7 +285,6 @@ function setField(){
 	playingField.addChild(backWallSprite);
 
 	//Floor
-	var floorTexture = PIXI.Texture.fromImage("floor2.png");
 	var floorSprite = new PIXI.Sprite(floorTexture);
 	floorSprite.anchor.x = 0;
 	floorSprite.anchor.y = 0;
@@ -257,7 +294,7 @@ function setField(){
 
 	//Interafce
 	//Interface Dock
-	var optionsBarSprite = new PIXI.Sprite.fromImage("optionsBar.png");
+	var optionsBarSprite = new PIXI.Sprite(optionsBarTexture);
 	optionsBarSprite.anchor.x = 0;
 	optionsBarSprite.anchor.y = 1;
 	optionsBarSprite.position.x = 0;
@@ -265,8 +302,6 @@ function setField(){
 	playingField.addChild(optionsBarSprite);
 
 	//Sword Attack
-	var swordTexture = new PIXI.Texture.fromImage("swordIcon.png");
-	var swordTextureSelected = new PIXI.Texture.fromImage("swordIconSelected.png");
 	var swordIcon = new PIXI.Sprite(swordTexture);
 	swordIcon.anchor.x = 0.5;
 	swordIcon.anchor.y = 0.5;
@@ -276,8 +311,6 @@ function setField(){
 	optionsBarSprite.addChild(swordIcon);
 
 	//Wand Attack Icon
-	var wandTexture = new PIXI.Texture.fromImage("wandIcon.png");
-	var wandTextureSelected = new PIXI.Texture.fromImage("wandIconSelected.png");
 	var wandIcon = new PIXI.Sprite(wandTexture);
 	wandIcon.anchor.x = 0.5;
 	wandIcon.anchor.y = 0.5;
@@ -292,8 +325,6 @@ function setField(){
 	wandContainer.visible = false;
 
 	//Water Spell
-	var waterTexture = new PIXI.Texture.fromImage("waterSprite.png");
-	var waterTextureSelected = new PIXI.Texture.fromImage("waterSpriteSelected.png");
 	var waterIcon = new PIXI.Sprite(waterTexture);
 	waterIcon.interactive = true;
 	waterIcon.anchor.x = 0.5;
@@ -303,8 +334,7 @@ function setField(){
 	wandContainer.addChild(waterIcon);
 
 	//Fire Spell
-	var fireTexture = new PIXI.Texture.fromImage("fireSprite.png");
-	var fireTextureSelected = new PIXI.Texture.fromImage("fireSpriteSelected.png");
+	
 	var fireIcon = new PIXI.Sprite(fireTexture);
 	fireIcon.interactive = true;
 	fireIcon.anchor.x = 0.5;
@@ -316,7 +346,7 @@ function setField(){
 	//Add Icons to Wand Container after defining them
 	wandIcon.addChild(wandContainer);
 	
-	var goHome = new PIXI.Sprite.fromImage("plainHome.png");
+	var goHome = new PIXI.Sprite(homeTexture);
 	goHome.anchor.x = 0;
 	goHome.anchor.y = 0;
 	goHome.position.x = 15;
@@ -334,7 +364,8 @@ function setField(){
 
 	//Game Characters
 	//Hero
-	var hero = new PIXI.Sprite.fromImage("hero.png");
+	
+	var hero = new PIXI.Sprite(heroTexture);
 	hero.anchor.x = 0.5;
 	hero.anchor.y = 0.5;
 	hero.position.x = 130;
@@ -344,11 +375,10 @@ function setField(){
 	playingField.addChild(hero);
 
 	//Monster Container
-	
 	var monsterContainer = new PIXI.Container();
 	playingField.addChild(monsterContainer);
-	
-	
+
+	//Generate the body of the 'Eye Monster'
 	var evilSlime = new PIXI.extras.MovieClip(frames); 
 	evilSlime.animationSpeed = 0.1;
 	
@@ -483,5 +513,4 @@ function animate() {
 	requestAnimationFrame(animate);
 	renderer.render(stage);
 }
-setMainMenu();
 animate();
