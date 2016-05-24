@@ -7,9 +7,16 @@ var stage = new PIXI.Container();
 
 var playingField = new PIXI.Container();
 var mainMenu = new PIXI.Container();
+var credits = new PIXI.Container();
+var manual = new PIXI.Container();
 var gameOver = new PIXI.Container();
 
 
+
+//Playing Field
+
+//Aesthetic Background
+//Brick Wall
 var backWallSprite = new PIXI.Sprite.fromImage("backWall.png");
 backWallSprite.anchor.x = 0;
 backWallSprite.anchor.y = 0;
@@ -17,7 +24,7 @@ backWallSprite.position.x = 0;
 backWallSprite.position.y = 0;
 stage.addChild(backWallSprite);
 
-
+//Floor
 var floorTexture = PIXI.Texture.fromImage("floor2.png");
 var floorSprite = new PIXI.Sprite(floorTexture);
 floorSprite.anchor.x = 0;
@@ -26,7 +33,8 @@ floorSprite.position.x = 0;
 floorSprite.position.y = 130;
 stage.addChild(floorSprite);
 
-
+//Interafce
+//Interface Dock
 var optionsBarSprite = new PIXI.Sprite.fromImage("optionsBar.png");
 optionsBarSprite.anchor.x = 0;
 optionsBarSprite.anchor.y = 1;
@@ -34,6 +42,7 @@ optionsBarSprite.position.x = 0;
 optionsBarSprite.position.y = 400;
 stage.addChild(optionsBarSprite);
 
+//Sword Attack
 var swordTexture = new PIXI.Texture.fromImage("swordIcon.png");
 var swordTextureSelected = new PIXI.Texture.fromImage("swordIconSelected.png");
 var swordIcon = new PIXI.Sprite(swordTexture);
@@ -44,6 +53,7 @@ swordIcon.position.y = -60;
 swordIcon.interactive = true;
 optionsBarSprite.addChild(swordIcon);
 
+//Wand Attack Icon
 var wandTexture = new PIXI.Texture.fromImage("wandIcon.png");
 var wandTextureSelected = new PIXI.Texture.fromImage("wandIconSelected.png");
 var wandIcon = new PIXI.Sprite(wandTexture);
@@ -54,10 +64,12 @@ wandIcon.position.y = -30;
 wandIcon.interactive = true;
 optionsBarSprite.addChild(wandIcon);
 
+//Container that holds Wand Attack options
 var wandContainer = new PIXI.Container();
 wandContainer.interactive = true;
 wandContainer.visible = false;
 
+//Water Spell
 var waterTexture = new PIXI.Texture.fromImage("waterSprite.png");
 var waterTextureSelected = new PIXI.Texture.fromImage("waterSpriteSelected.png");
 var waterIcon = new PIXI.Sprite(waterTexture);
@@ -68,6 +80,7 @@ waterIcon.position.x = 45;
 waterIcon.position.y = -30;
 wandContainer.addChild(waterIcon);
 
+//Fire Spell
 var fireTexture = new PIXI.Texture.fromImage("fireSprite.png");
 var fireTextureSelected = new PIXI.Texture.fromImage("fireSpriteSelected.png");
 var fireIcon = new PIXI.Sprite(fireTexture);
@@ -78,6 +91,11 @@ fireIcon.position.x = 45;
 fireIcon.position.y = 0;
 wandContainer.addChild(fireIcon);
 
+//Add Icons to Wand Container after defining them
+wandIcon.addChild(wandContainer);
+
+//Game Characters
+//Hero
 var hero = new PIXI.Sprite.fromImage("hero.png");
 hero.anchor.x = 0.5;
 hero.anchor.y = 0.5;
@@ -87,12 +105,11 @@ hero.attackType = "null";
 hero.enemy = "null";
 stage.addChild(hero);
 
-wandIcon.addChild(wandContainer);
 
 
-//
+
+//Monster Container
 var monsterContainer = new PIXI.Container();
-monsterContainer.numMonsters = 3;
 stage.addChild(monsterContainer);
 
 
@@ -125,6 +142,7 @@ evilSlime.addChild(evilEye);
 
 
 //Attack Icon Mouse Handlers
+//Highlight the Sword attack
 function mouseHandlerSwordIcon(e) {
 	wandContainer.visible = false;
 	monsterContainer.interactive = true;
@@ -135,6 +153,7 @@ function mouseHandlerSwordIcon(e) {
 	swordIcon.texture = swordTextureSelected;
 }
 
+//Highlight the Wand attack and deselect the Sword attack
 function mouseHandlerWandIcon(e) {
 	wandContainer.visible = true;
 	wandIcon.texture = wandTextureSelected;
@@ -142,6 +161,8 @@ function mouseHandlerWandIcon(e) {
 	waterIcon.texture = waterTexture;
 	swordIcon.texture = swordTexture;
 }
+
+//Highlight the Fire Spell and deselect the Sword attack and Fire Spell
 function mouseHandlerFireIcon(e) {
 	hero.attackType = "fire";
 	wandIcon.texture = wandTextureSelected;
@@ -150,6 +171,7 @@ function mouseHandlerFireIcon(e) {
 	swordIcon.texture = swordTexture;
 }
 
+//Highlight the Water Spell and deselect the Sword attack and Fire Spell
 function mouseHandlerWaterIcon(e) {
 	hero.attackType = "water";
 	wandIcon.texture = wandTextureSelected;
@@ -170,15 +192,17 @@ function attack(){
 	animateHero('+');
 	setTimeout(function(){ animateHero("-"); }, 250);
 	if(hero.attackType == "sword"){
-		evilSlime.health -= 10;
+		evilSlime.health -= 15;
 		
 	}else if(hero.attackType == "fire"){
-		evilSlime.health += 20;
-		
+		evilSlime.health -= 10;
+		slime.position.x -= 10;
+		slime.canMove = false;
 	}else{
 		canMove = false;
 		if (evilSlime.position.x <= 550){
 			evilSlime.position.x += 30;
+			evilSlime.health += 5;
 			window.alert("Slime position = "+ evilSlime.position.x);
 		}
 	}
@@ -196,7 +220,7 @@ function attack(){
 		
 	}
 	if(canMove == true){
-		evilSlime.position.x -= 250;
+		evilSlime.position.x -= 35;
 	}
 	if(evilSlime.position.x <= 163){
 		evilSlime.position.x = 163;
