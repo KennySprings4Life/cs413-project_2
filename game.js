@@ -165,7 +165,6 @@ function setGameOver(hasLost){
 	gameOver.addChild(menuText);
 	
 	if(hasLost == true){
-		window.alert("Gamed over");
 		gameOver.addChild(gameOverSprite);
 		
 	}
@@ -377,7 +376,6 @@ function setField(){
 			if (evilSlime.position.x <= 550){
 				evilSlime.position.x += 30;
 				evilSlime.health += 5;
-				window.alert("Slime position = "+ evilSlime.position.x);
 			}
 		}
 		healthBar.text = "Monster Health: " + evilSlime.health;
@@ -388,17 +386,11 @@ function setField(){
 			monsterContainer.removeChild(evilSlime);
 		}
 		
-		if(monsterContainer.numMonsters <= 0){
-			window.alert("You have won!");
-			//stage.destroy();
-			
-		}
 		if(canMove == true){
 			evilSlime.position.x -= 35;
 		}
 		if(evilSlime.position.x <= 163){
 			evilSlime.position.x = 163;
-			window.alert("You have lost");
 			setGameOver(true);
 			
 		}
