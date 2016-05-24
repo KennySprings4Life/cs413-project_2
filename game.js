@@ -426,13 +426,17 @@ function setField(){
 			fireSound.play();
 			canMove = false;
 			evilSlime.health -= 14;
-			evilSlime.position.x -= 45;
+			var new_x = evilSlime.position.x - 45;
+			var new_y = evilSlime.position.y;
+			createjs.Tween.get(evilSlime.position).to({x: new_x, y: new_y}, 500, createjs.Ease.circOut);
 
 		}else{
 			waterSound.play();
 			canMove = false;
 			if (evilSlime.position.x <= 550){
-				evilSlime.position.x += 25;
+				var new_x = evilSlime.position.x + 25;
+				var new_y = evilSlime.position.y;
+				createjs.Tween.get(evilSlime.position).to({x: new_x, y: new_y}, 500, createjs.Ease.cubicOut);
 				evilSlime.health += 5;
 			}
 		}
@@ -442,7 +446,9 @@ function setField(){
 		}
 		
 		if(canMove == true){
-			evilSlime.position.x -= 30;	
+			var new_x = evilSlime.position.x -30;
+			var new_y = evilSlime.position.y;
+			createjs.Tween.get(evilSlime.position).to({x: new_x, y: new_y}, 1000);
 		}
 		if(evilSlime.position.x <= 163){
 			evilSlime.position.x = 163;
@@ -465,12 +471,15 @@ function setField(){
 	
 	//Sprite Animations
 	function animateHero(direction) {
+		var time = 500;
 		if(direction == "+"){
-			hero.position.x += 10;
-			renderer.render(stage);
+			var new_x = 140;
+			var new_y = hero.position.y;
+			createjs.Tween.get(hero.position).to({x: new_x, y: new_y}, time, createjs.Ease.quintOut);
 		}else{
-			hero.position.x -= 10;
-			renderer.render(stage);
+			var new_x = hero.position.x = 130;
+			var new_y = hero.position.y;
+			createjs.Tween.get(hero.position).to({x: new_x, y: new_y}, time);
 		}
 		
 	}
