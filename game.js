@@ -150,7 +150,7 @@ function setGameOver(hasLost){
 	gameOverSprite.position.x = 300;
 	gameOverSprite.position.y = 200;
 	
-	var winSprite = new PIXI.Sprite.fromImage("waterSpriteSelected.png");
+	var winSprite = new PIXI.Sprite.fromImage("winner.png");
 	winSprite.anchor.x = 0.5;
 	winSprite.anchor.y = 0.5;
 	winSprite.position.x = 300;
@@ -166,7 +166,8 @@ function setGameOver(hasLost){
 	
 	if(hasLost == true){
 		gameOver.addChild(gameOverSprite);
-		
+	}else{
+		gameOver.addChild(winSprite);
 	}
 	function mouseHandlerGMHome(e){
 		setMainMenu();
@@ -365,33 +366,31 @@ function setField(){
 		animateHero('+');
 		setTimeout(function(){ animateHero("-"); }, 250);
 		if(hero.attackType == "sword"){
-			evilSlime.health -= 15;
+			evilSlime.health -= 11;
 			
 		}else if(hero.attackType == "fire"){
-			evilSlime.health -= 10;
-			slime.position.x -= 10;
-			slime.canMove = false;
+			canMove = false;
+			evilSlime.health -= 14;
+			evilSlime.position.x -= 45;
+
 		}else{
 			canMove = false;
 			if (evilSlime.position.x <= 550){
-				evilSlime.position.x += 30;
+				evilSlime.position.x += 25;
 				evilSlime.health += 5;
 			}
 		}
 		healthBar.text = "Monster Health: " + evilSlime.health;
-		if(evilSlime.health <= 0 && monsterContainer.one == true){
-			monsterContainer.numMonsters -= 1;
-			monsterContainer.one = false;
-			evilSlime.destroy();
-			monsterContainer.removeChild(evilSlime);
+		if(evilSlime.health <= 0){
+			setGameOver(false);	//Player has won
 		}
 		
 		if(canMove == true){
-			evilSlime.position.x -= 35;
+			evilSlime.position.x -= 30;	
 		}
 		if(evilSlime.position.x <= 163){
 			evilSlime.position.x = 163;
-			setGameOver(true);
+			setGameOver(true);	//Player has lost
 			
 		}
 	}
